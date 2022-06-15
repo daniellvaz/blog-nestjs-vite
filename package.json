@@ -1,0 +1,15 @@
+{
+  "name": "blog-nestjs-vite",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "web": "yarn workspace @blog/web dev",
+    "api": "yarn workspace @blog/api start:dev",
+    "dev": "yarn web && yarn api"
+  }
+}
