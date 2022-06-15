@@ -1,12 +1,12 @@
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { Injectable, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { MailService } from 'src/mail/mail.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserDocument } from './entities/user.entity';
-import { MailService } from 'src/mail/mail.service';
-import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
@@ -22,14 +22,16 @@ export class UserService {
     });
 
     if (userAlreadExists) {
-      throw new Error('User Already Exists');
+      throw new HttpException('User already exists', 400);
     }
+
     const hash = await bcrypt.hash(createUserDto.password, 10);
     const user = await this.userModel.create({
       ...createUserDto,
       password: hash,
     });
-    const token = this.jwtService.sign({ id: user._id });
+
+    const token = this.jwtService.sign({ id: user._id }, { expiresIn: '1h' });
     await this.mailService.sendUserConfirmation(user, token);
 
     return user;
@@ -74,5 +76,17 @@ export class UserService {
     if (!email) {
       throw new Error('User dont exist');
     }
+  }
+
+  async confirmEmail(token: string) {
+    const data = this.jwtService.decode(token);
+    const user = await this.userModel.findById(data['id']);
+
+    if (!user) {
+      throw new Error('User dont exist');
+    }
+
+    user.isEmailValid = true;
+    await user.save();
   }
 }

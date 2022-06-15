@@ -41,10 +41,10 @@
     When user is unauthenticate:
       [] - user can be abble to read the posts.
       [x] - user can be abble to create.
-      [] - when user create an account, the email must be verified by a link sended
-           to users email.
+      [x] - when user create an account, the email must be verified by a link sended
+           to user's email.
       [] - user can be recovery password by email link.
-      [] - user can use google credentials to create account.
+      [] - user can use github credentials to create account.
     
     When user is authenticated:
       [] - user can be abble to update profile if email has been verified.

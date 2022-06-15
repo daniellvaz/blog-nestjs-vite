@@ -5,9 +5,11 @@ import {
   Body,
   Patch,
   Param,
+  Res,
   Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
+import { Response } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -48,5 +50,12 @@ export class UserController {
   @Get('reset/password')
   resetPassword(@Param('id') id: string) {
     return this.userService.resetPassword(id);
+  }
+
+  @Get('confirm/:token')
+  confirmEmail(@Param('token') token: string, @Res() res: Response) {
+    this.userService.confirmEmail(token);
+
+    return res.status(200).json({ ok: true });
   }
 }

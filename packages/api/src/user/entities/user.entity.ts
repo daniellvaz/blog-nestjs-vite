@@ -17,6 +17,9 @@ export class User {
   @Prop()
   password: string;
 
+  @Prop({ default: false })
+  isEmailValid: boolean;
+
   @Prop({ default: Date.now() })
   createdAt: Date;
 

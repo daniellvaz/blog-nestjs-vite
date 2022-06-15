@@ -1,4 +1,4 @@
-import path from 'path';
+import { resolve } from 'path';
 import { Module } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { MailerModule } from '@nestjs-modules/mailer';
@@ -8,22 +8,25 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
   imports: [
     MailerModule.forRoot({
       transport: {
-        host: 'smtp.gmail.com',
+        host: 'smtp.mail.yahoo.com',
         port: 465,
-        secure: true,
+        service: 'yahoo',
+        secure: false,
         auth: {
-          user: 'daniellmvaz@gmail.com',
-          pass: 'D@ni3lvaz1992',
+          user: 'daniellmurilo@yahoo.com.br',
+          pass: 'jjerkyyedggttiwy',
         },
+        debug: false,
+        logger: true,
       },
       defaults: {
-        from: 'No Reply <daniellmvaz@gmail.com>',
+        from: 'no-reply <daniellmurilo@yahoo.com.br>',
       },
       template: {
-        dir: path.join(__dirname, 'templates'),
+        dir: resolve(__dirname, './templates'),
         adapter: new HandlebarsAdapter(),
         options: {
-          strict: true,
+          strict: false,
         },
       },
     }),

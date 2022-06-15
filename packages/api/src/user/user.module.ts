@@ -9,8 +9,8 @@ import { User, UserSchema } from './entities/user.entity';
 @Module({
   imports: [
     MailModule,
-    JwtModule.register({ secret: 'hard!to-guess_secret' }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    JwtModule.register({ secret: '8044a16e-46f1-4300-bcf7-361a202542d7' }),
   ],
   controllers: [UserController],
   providers: [UserService],
