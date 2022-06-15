@@ -33,17 +33,21 @@
       [] Stiches-React
 
     back-end: 
-      [] Nestjs
-      [] MongoDB
+      [x] Nestjs
+      [x] MongoDB
 
   Functional requirements:
 
     When user is unauthenticate:
-      [] - user can be abble to read a post.
-      [] - user can be abble to create an account.
+      [] - user can be abble to read the posts.
+      [x] - user can be abble to create.
+      [] - when user create an account, the email must be verified by a link sended
+           to users email.
+      [] - user can be recovery password by email link.
       [] - user can use google credentials to create account.
     
     When user is authenticated:
+      [] - user can be abble to update profile if email has been verified.
       [] - user can have multiple posts.
       [] - user can be abble to like an post.
       [] - user can be abble to unlike a post.
