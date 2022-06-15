@@ -1,26 +1,37 @@
+import * as bcrypt from 'bcrypt';
+import { Model } from 'mongoose';
+import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
-import { CreateAuthenticationDto } from './dto/create-authentication.dto';
-import { UpdateAuthenticationDto } from './dto/update-authentication.dto';
-
+import { InjectModel } from '@nestjs/mongoose';
+import { User, UserDocument } from 'src/user/entities/user.entity';
+import { AuthenticationDto } from './dto/authentication.dto';
 @Injectable()
 export class AuthenticationService {
-  create(createAuthenticationDto: CreateAuthenticationDto) {
-    return 'This action adds a new authentication';
-  }
+  constructor(
+    private readonly jwtService: JwtService,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+  ) {}
 
-  findAll() {
-    return `This action returns all authentication`;
-  }
+  async authenticate(authenticationDto: AuthenticationDto) {
+    const user = await this.userModel.findOne({
+      email: authenticationDto.email,
+    });
 
-  findOne(id: number) {
-    return `This action returns a #${id} authentication`;
-  }
+    if (!user) {
+      throw new Error('Invalid credentials');
+    }
 
-  update(id: number, updateAuthenticationDto: UpdateAuthenticationDto) {
-    return `This action updates a #${id} authentication`;
-  }
+    const isPasswordMatched = await bcrypt.compare(
+      authenticationDto.password,
+      user.password,
+    );
 
-  remove(id: number) {
-    return `This action removes a #${id} authentication`;
+    if (!isPasswordMatched) {
+      throw new Error('Invalid credentials');
+    }
+
+    const payload = { email: user.email };
+    const accessToken = this.jwtService.sign(payload);
+    return { accessToken, user };
   }
 }

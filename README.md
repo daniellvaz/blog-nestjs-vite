@@ -39,13 +39,13 @@
   Functional requirements:
 
     When user is unauthenticate:
-      [] - user can be abble to read the posts.
+      [] - user can authenticate.
       [x] - user can be abble to create.
-      [x] - when user create an account, the email must be verified by a link sended
-           to user's email.
+      [] - user can be abble to read the posts.
       [] - user can be recovery password by email link.
       [] - user can use github credentials to create account.
-    
+      [x] - when user create an account, the email must be verified by a link sended to user's email.
+
     When user is authenticated:
       [] - user can be abble to update profile if email has been verified.
       [] - user can have multiple posts.
