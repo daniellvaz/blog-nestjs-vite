@@ -1,21 +1,24 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './user/user.module';
 import { MailModule } from './mail/mail.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { EnsureAuthenticated } from './middlewares/EnsureAuthenticated/ensureAuthenticated.middleware';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: '.development.env',
-    }),
-    MongooseModule.forRoot('mongodb://localhost:27017/blog'),
     UserModule,
     MailModule,
     AuthenticationModule,
+    JwtModule.register({ secret: process.env.JWT_SECRET }),
+    MongooseModule.forRoot(process.env.MONGO_URL),
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(EnsureAuthenticated).exclude('authenticate').forRoutes('*');
+  }
+}

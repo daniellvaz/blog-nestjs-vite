@@ -32,6 +32,7 @@
     "@types/bcrypt": "^5.0.0",
     "@types/nodemailer": "^6.4.4",
     "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
     "mongoose": "^6.3.8",
     "nodemailer": "^6.7.5",
     "reflect-metadata": "^0.1.13",

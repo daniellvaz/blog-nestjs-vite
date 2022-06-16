@@ -17,7 +17,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
           pass: process.env.MAIL_PASSWORD,
         },
         debug: false,
-        logger: true,
+        logger: false,
       },
       defaults: {
         from: 'no-reply <daniellmurilo@yahoo.com.br>',

@@ -8,7 +8,7 @@ import { AuthenticationController } from './authentication.controller';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    JwtModule.register({ secret: '8044a16e-46f1-4300-bcf7-361a202542d7' }),
+    JwtModule.register({ secret: process.env.JWT_SECRET }),
   ],
   controllers: [AuthenticationController],
   providers: [AuthenticationService],
