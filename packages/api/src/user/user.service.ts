@@ -38,13 +38,18 @@ export class UserService {
   }
 
   async findAll() {
-    const users = await this.userModel.find({ status: true });
+    const users = await this.userModel.find(
+      { status: true },
+      { name: true, email: true },
+    );
 
     return users;
   }
 
   async findOne(id: string) {
-    const user = await this.userModel.findById(id);
+    const user = await this.userModel
+      .findById(id, { name: true, email: true })
+      .where('status', true);
 
     return user;
   }
@@ -53,21 +58,21 @@ export class UserService {
     id: string,
     updateUserDto: Omit<UpdateUserDto, 'status' | 'id' | 'password'>,
   ) {
-    const updatedUser = await this.userModel.updateOne({ id }, updateUserDto);
+    await this.userModel.updateOne({ id }, updateUserDto);
 
-    return updatedUser;
+    return { ok: true };
   }
 
   async remove(id: string) {
-    const result = await this.userModel.updateOne({ id }, { status: false });
+    await this.userModel.updateOne({ id }, { status: false });
 
-    return result;
+    return { ok: true };
   }
 
   async active(id: string) {
-    const result = await this.userModel.updateOne({ id }, { status: true });
+    await this.userModel.updateOne({ id }, { status: true });
 
-    return result;
+    return { ok: true };
   }
 
   async resetPassword(id: string) {

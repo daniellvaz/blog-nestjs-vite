@@ -13,25 +13,34 @@ export class AuthenticationService {
   ) {}
 
   async authenticate(authenticationDto: AuthenticationDto) {
-    const user = await this.userModel.findOne({
+    const userExists = await this.userModel.findOne({
       email: authenticationDto.email,
     });
 
-    if (!user) {
+    if (!userExists) {
       throw new Error('Invalid credentials');
     }
 
     const isPasswordMatched = await bcrypt.compare(
       authenticationDto.password,
-      user.password,
+      userExists.password,
     );
 
     if (!isPasswordMatched) {
       throw new Error('Invalid credentials');
     }
 
-    const payload = { email: user.email };
-    const accessToken = this.jwtService.sign(payload);
-    return { accessToken, user };
+    const payload = { email: userExists.email };
+    const token = this.jwtService.sign(payload);
+    const user = {
+      id: userExists.id,
+      name: userExists.name,
+      email: userExists.email,
+    };
+
+    return {
+      token,
+      user,
+    };
   }
 }

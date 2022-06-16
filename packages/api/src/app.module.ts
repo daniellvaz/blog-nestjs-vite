@@ -5,14 +5,16 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { EnsureAuthenticated } from './middlewares/EnsureAuthenticated/ensureAuthenticated.middleware';
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
     UserModule,
     MailModule,
+    PostModule,
     AuthenticationModule,
-    JwtModule.register({ secret: process.env.JWT_SECRET }),
     MongooseModule.forRoot(process.env.MONGO_URL),
+    JwtModule.register({ secret: process.env.JWT_SECRET }),
   ],
   controllers: [],
   providers: [],

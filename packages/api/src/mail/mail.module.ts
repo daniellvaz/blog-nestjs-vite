@@ -13,11 +13,11 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         service: 'yahoo',
         secure: false,
         auth: {
-          user: process.env.MAIL_USER,
-          pass: process.env.MAIL_PASSWORD,
+          user: 'daniellmurilo@yahoo.com.br',
+          pass: 'jjerkyyedggttiwy',
         },
         debug: false,
-        logger: false,
+        logger: true,
       },
       defaults: {
         from: 'no-reply <daniellmurilo@yahoo.com.br>',
