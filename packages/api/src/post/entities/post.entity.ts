@@ -1,3 +1,4 @@
+import { Tag } from './tag.entity';
 import mongoose, { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { User } from 'src/user/entities/user.entity';
@@ -20,6 +21,9 @@ export class Post {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   author: User;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }] })
+  tags: Tag[];
 
   @Prop({ default: Date.now() })
   createdAt: Date;

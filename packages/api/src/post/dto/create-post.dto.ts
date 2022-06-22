@@ -3,5 +3,6 @@ export class CreatePostDto {
   content: string;
   slug: string;
   images: string[];
+  tags: string[];
   author: string;
 }
