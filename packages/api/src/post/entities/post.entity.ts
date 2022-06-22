@@ -1,3 +1,4 @@
+import { Category } from './category.entity';
 import { Tag } from './tag.entity';
 import mongoose, { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
@@ -18,6 +19,15 @@ export class Post {
 
   @Prop()
   images: string[];
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  likedBy: User;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  unlikedBy: User;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
+  category: Category;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   author: User;

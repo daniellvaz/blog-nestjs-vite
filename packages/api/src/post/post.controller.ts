@@ -35,9 +35,24 @@ export class PostController {
     return this.postService.findBySlug(slug);
   }
 
+  @Get('category/:id')
+  findByCategory(@Param('id') id: string) {
+    return this.postService.findByCategory(id);
+  }
+
   @Patch('update/:id')
   update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
     return this.postService.update(id, updatePostDto);
+  }
+
+  @Patch('like/:slug')
+  like(@Param('slug') slug: string, @Body() userId: string) {
+    return this.postService.like(slug, userId);
+  }
+
+  @Patch('unlike/:slug')
+  unlike(@Param('slut') slug: string, @Body() userId: string) {
+    return this.postService.unlike(slug, userId);
   }
 
   @Delete('delete/:id')
