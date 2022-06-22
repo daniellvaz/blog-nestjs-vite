@@ -47,9 +47,14 @@ export class UserController {
     return this.userService.active(id);
   }
 
-  @Get('reset/password')
+  @Get('reset/password/:id')
   resetPassword(@Param('id') id: string) {
     return this.userService.resetPassword(id);
+  }
+
+  @Post('reset/password/:token')
+  recoveryPassword(@Param('token') token: string, @Body() password: string) {
+    return this.userService.updatePassword(token, password);
   }
 
   @Get('confirm/:token')

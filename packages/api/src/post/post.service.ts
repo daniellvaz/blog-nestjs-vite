@@ -10,7 +10,8 @@ export class PostService {
   constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {}
 
   async create(createPostDto: CreatePostDto) {
-    const post = new this.postModel(createPostDto);
+    const slug = createPostDto.title.toLowerCase().replace(/ /g, '-');
+    const post = new this.postModel({ ...createPostDto, slug });
 
     return await post.save();
   }
@@ -23,11 +24,15 @@ export class PostService {
     return await this.postModel.findById(id).populate('author', 'name');
   }
 
-  update(id: string, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async findBySlug(slug: string) {
+    return await this.postModel.findOne({ slug }).populate('author', 'name');
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} post`;
+  async update(id: string, updatePostDto: UpdatePostDto) {
+    return await this.postModel.findByIdAndUpdate(id, updatePostDto);
+  }
+
+  async remove(id: string) {
+    return await this.postModel.deleteOne({ id });
   }
 }

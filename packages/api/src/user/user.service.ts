@@ -76,11 +76,22 @@ export class UserService {
   }
 
   async resetPassword(id: string) {
-    const { email } = await this.userModel.findById(id);
+    const user = await this.userModel.findById(id);
+    const token = this.jwtService.sign(id);
 
-    if (!email) {
-      throw new Error('User dont exist');
+    if (!user.email || !user.isEmailValid) {
+      throw new Error('An error occurred!');
     }
+
+    await this.mailService.resetPassword(user, token);
+  }
+
+  async updatePassword(token: string, password: string) {
+    const data = this.jwtService.decode(token);
+
+    await this.userModel.findByIdAndUpdate(data['id'], {
+      password,
+    });
   }
 
   async confirmEmail(token: string) {

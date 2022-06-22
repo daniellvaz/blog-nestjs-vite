@@ -20,4 +20,18 @@ export class MailService {
       },
     });
   }
+
+  async resetPassword(user: User, token: string) {
+    const url = `http://localhost:3000/recovery/${token}`;
+
+    await this.mailerService.sendMail({
+      to: user.email,
+      subject: 'Hey, this link to reset your password',
+      template: resolve(__dirname, './templates/reset'),
+      context: {
+        name: user.name,
+        url,
+      },
+    });
+  }
 }

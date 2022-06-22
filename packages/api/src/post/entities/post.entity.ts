@@ -13,6 +13,9 @@ export class Post {
   content: string;
 
   @Prop()
+  slug: string;
+
+  @Prop()
   images: string[];
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })

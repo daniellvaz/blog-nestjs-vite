@@ -39,20 +39,20 @@
   Functional requirements:
 
     When user is unauthenticate:
-      [] - user can authenticate.
+      [x] - user can authenticate.
       [x] - user can be abble to create.
-      [] - user can be abble to read the posts.
-      [] - user can be recovery password by email link.
+      [x] - user can be abble to read the posts.
+      [x] - user can be recovery password by email link.
       [] - user can use github credentials to create account.
       [x] - when user create an account, the email must be verified by a link sended to user's email.
 
     When user is authenticated:
-      [] - user can be abble to update profile if email has been verified.
-      [] - user can have multiple posts.
+      [x] - user can be abble to update profile if email has been verified.
+      [x] - user can have multiple posts.
       [] - user can be abble to like an post.
       [] - user can be abble to unlike a post.
-      [] - user can be abble to create, read, update and delete posts (CRUD).
+      [x] - user can be abble to create, read, update and delete posts (CRUD).
 
     Posts:
-      [] - the post must contain an author
-      [] - the post can have a multiple tags
+      [x] - the post must contain an author
+      [x] - the post can have a multiple tags

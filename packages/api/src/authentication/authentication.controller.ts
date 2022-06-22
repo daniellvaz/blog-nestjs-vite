@@ -10,4 +10,9 @@ export class AuthenticationController {
   authenicate(@Body() authenticationDto: AuthenticationDto) {
     return this.authenticationService.authenticate(authenticationDto);
   }
+
+  @Post('github')
+  githubOAuth() {
+    return this.authenticationService.githubOAuth();
+  }
 }

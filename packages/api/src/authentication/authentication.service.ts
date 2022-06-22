@@ -1,3 +1,4 @@
+import { api } from './../utils/api';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
@@ -42,5 +43,15 @@ export class AuthenticationService {
       token,
       user,
     };
+  }
+
+  async githubOAuth() {
+    const response = await api.get('/login/oauth/autorize', {
+      data: {
+        client_id: '58807602809eb89f9005',
+      },
+    });
+
+    console.log(response);
   }
 }
